@@ -1,0 +1,282 @@
+html {
+    height: 100%;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font: normal 0.78em Optima, sans-serif;
+    background: #111;
+    color: #555;
+  }
+  
+  p {
+    padding: 0 60px 16px 0;
+    line-height: 1.7em;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font: 175% "century gothic", Optima, sans-serif;
+    color: #111;
+    margin: 0 0 15px 0;
+    padding: 15px 0 15px 0;
+  }
+  
+  h2 {
+    color: #444;
+  }
+  
+  h4, h5, h6 {
+    margin: 0;
+    padding: 0 50px 5px 0;
+    font: normal 120% Optima, sans-serif;
+  }
+  
+  h5, h6 {
+    font: italic 95% Optima, sans-serif;
+    padding: 0 0 15px 0;
+    color: #000;
+  }
+  
+  h6 {
+    color: #888;
+  }
+  
+  a {
+    outline: none;
+    color: #111;
+    text-decoration: underline;
+  }
+  
+  a:hover {
+    text-decoration: none;
+  }
+  
+  ul {
+    margin: 2px 0 22px 17px;
+  }
+  
+  ul li {
+    list-style-type: circle;
+    margin: 0 0 6px 0;
+    padding: 0 0 4px 5px;
+  }
+  
+  #main, #header, #logo, #menubar, #site_content, #footer {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  #main {
+    width: 910px;
+    background: url(content.png) repeat-y;
+  }
+  
+  #header {
+    width: 890px;
+    background: url(back.png) repeat-x;
+  }
+  
+  /* #militarypic{
+    position: fixed;
+    /* top: -50%; 
+    
+    /* left: -50%; 
+    width: 100%;
+    height: 100%;
+    background: url(tank.png);
+  } */
+  #logo {
+    width: 626px;
+    position: relative;
+    height: 200px;
+    background: url(logo_background.jpg) no-repeat;
+  }
+  
+  #logo_text {
+    position: absolute;
+    top: 0px;
+    left: 30px;
+  }
+  
+  #logo_text h1, #logo_text h2 {
+    font: normal 300% 'century gothic', arial, sans-serif;
+    border-bottom: 0;
+    margin: 0;
+  }
+  
+  #logo_text h1, #logo_text h1 a, #logo_text h1 a:hover {
+    padding: 10px 0 0 0;
+    color: #111;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+  }
+  
+  #logo_text h2 {
+    font-size: 130%;
+    padding: 0;
+
+  }
+
+  
+  #menubar {
+    width: 890px;
+    height: 35px;
+    padding: 8px 100px 0 0;
+    margin: -52px 100px 0 0;
+    position: relative;
+    z-index: 1;
+    left:20%;
+  }
+  
+  
+  ul#menu li {
+    float: left;
+    margin: 7px 0 0 0;
+    padding: 0 0 0 6px;
+    list-style: none;
+  }
+  
+  ul#menu li a {
+    color: #111;
+    letter-spacing: 0em;
+    font: normal 130% arial, sans-serif;
+    
+    display: block;
+    float: left;
+    text-decoration: none;
+    padding: 9px 22px 5px 16px;
+    text-align: center;
+    
+    border: 0;
+  }
+  ul#menu li a {
+    color :#111;
+  }
+
+
+  ul#menu li.selected {
+    margin: 7px 0 0 0;
+    background: #DDD;
+  }
+  ul#menu li.selected a {
+
+    color: blue
+  }
+
+  ul#menu li.selected a:hover {
+    color: blue
+  }
+  ul#menu li a:hover {
+    color: cornflowerblue;
+  }
+  
+  #site_content {
+    position:static;
+    width: 890px;
+    height:auto;
+    overflow:hidden;
+    background: #f8f8f8;
+
+  }
+  
+  .sidebar {
+    float: right;
+    width: 240px;
+    padding: 100px 0 0 0;
+  }
+  
+  /* .sidebar ul {
+    width: 178px;
+    padding: 4px 0 0 0;
+    margin: 4px 0 30px 0;
+  }
+  
+  .sidebar li {
+    list-style-type: none;
+    padding: 0 0 7px 0;
+  }
+   */
+  
+  #content {
+    position:static;
+    text-align: left;
+    
+    float: left;
+    padding: 20px 30px 15px 30px;
+  }
+  
+  #content ul {
+    margin: 2px 0px 22px 100px;
+  }
+  
+  #content ul li {
+    list-style-type: none;
+    background: url(bullet.png) no-repeat;
+    margin: 0 0 6px 0;
+    padding: 0 0 4px 25px;
+    line-height: 1.5em;
+  }
+
+  #visualization,#series_chart_div{
+    position:static;
+    text-align: left;
+    width:600px;
+    height:500px;
+    float: left;
+    padding: 20px 0px 15px 40px;
+  }
+
+  .left{ 
+    float: left; 
+    width: 250px; 
+  
+    height: 250px; 
+    margin-top: 0px; 
+    } 
+    
+    
+    .center{ 
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 250px; 
+    
+    height: 250px; 
+    margin-top: 0px; 
+    } 
+    
+    
+    .right{ 
+    float: right; 
+    width: 250px; 
+    
+    height: 250px; 
+    margin-top: -250px; 
+    } 
+
+  #footer {
+    width: 890px;
+    height: 33px;
+    text-align: center;
+    background: #555;
+    color: #aaa;
+    border-top: 1px solid #fff;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 80%;
+  }
+  
+  #footer a {
+    bottom:0;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  #footer a:hover {
+    bottom:0;
+    color: #fff;
+    text-decoration: underline;
+  }

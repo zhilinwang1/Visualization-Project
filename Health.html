@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Health</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages': ['corechart', 'geochart']}); //must add GeoChart
+        google.charts.setOnLoadCallback(drawAllSheets);
+        function drawAllSheets(){
+            drawSheetName('HealthSpend', 'SELECT A,B,C,D,E,F,G,H', HealthSpendingResponseHandler);
+            // drawSheetName('MilitaryGDP_percent', 'SELECT A,G', MilitaryGDPResponseHandler);
+            // drawSheetName('MilitaryCapita','SELECT A,G',MilitaryCapitaResponseHandler);
+            // drawSheetName('GDPCapita','SELECT A,G',GDPCapitaResponseHandler);
+            drawSheetName('healthGDPcapita', 'SELECT A,O,G', perCapitaGDPHealthSpendingResponseHandler);
+            drawSheetName('HealthGDP_percent','SELECT A,B,C,D,E,F,G',HealthGDPPercentResponseHandler)
+            // drawSheetName('militaryCapita',query('SELECT B,C,D,E,F,G where A = "United States"'),USmilitaryResponseHandler);
+            //drawSheetName('HealthSpend','SELECT A,B,C,D,E,F,G',animations);
+            drawSheetName('HealthDiff', 'SELECT A,L', annualGrowthResponseHandler);
+            drawSheetName('HealthDiffT', 'SELECT A,B,C,D,E,F,G,H,I,J,K,L', annualGrowthvalueResponseHandler);
+            drawSheetName('HealthDiffT', 'SELECT A,O,P,Q,R,S,T,U,V,W,X,Y', annualGrowthpercentResponseHandler);
+            drawSheetName('GDP', 'SELECT A,B,C,D,E,F,G', GDPResponseHandler);
+            //drawAllSheets('GDPCapita','SELECT A,B,C,D,E,F,G',GDPResponseHandler);
+            // drawSheetName('meanmilitaryspending', 'SELECT A,G', averageSpendingResponseHandler);
+            // drawSheetName('sharedgdp', 'SELECT A,B,C,D,E,F', sharedGDPResponseHandler);
+        } //drawAllSheets
+        function drawSheetName(sheetName, query, responseHandler){
+            var queryString = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1npZ4Jh-c5J9RWHb0orzV9m5Wx75Qdur3IK18hxOZghU/gviz/tq?sheet='
+                + sheetName + '&headers=1&tq=' + queryString);
+            //print(query.DataView)
+            query.send(responseHandler);
+        } //drawSheetName
+        function checkError(response) {
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage())
+                return;
+            }
+        } //checkError
+
+        
+
+        function HealthSpendingResponseHandler(response) {
+            var data = response.getDataTable();
+            data.sort({column: 7, desc:true});
+            var options = {
+                vAxis: {title: 'Spending ($)'},
+                hAxis: {title: 'Country'},
+                seriesType: "bars",
+                series: {6: {type: "line"}}
+            };
+            var chart = new google.visualization.ComboChart(document.getElementById('health_spending_div'));
+            chart.draw(data, options);
+        } //healthSpendingResponseHandler
+
+        function perCapitaGDPHealthSpendingResponseHandler(response){
+            checkError(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+
+            var options = {
+                legend: 'none',
+                bars: 'horizontal',
+                isStacked: true,
+                annotations: {alwaysOutside: true},
+                title: 'Per Capita GDP vs. Per Capita Health Spending (2017)',
+                vAxis: {title: 'Country'},
+                hAxis: {title: '($)'}
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('per_capita_gdp_health_div'));
+            chart.draw(data, options);
+        } //perCapitaGDPhealthSpendingResponseHandler
+
+        function HealthGDPPercentResponseHandler(response){
+            checkError(response);
+            var data = response.getDataTable();
+            data.sort({column: 6, desc: true});
+
+            var options = {
+                legend: {position: 'top', maxLines: 2},
+                bar: {groupWidth: '75%'},
+                isStacked: true,
+                vAxis: {title: 'Country'},
+                title: 'Healthcare spending in percent of GDP',
+                hAxis: {title: '% of GDP '},
+                
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('health_GDP_percent_div'));
+            chart.draw(data, options);
+        } //perCapitaGDPResponseHandler
+
+        function annualGrowthResponseHandler(response){
+            checkError(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+
+            var chart = new google.visualization.GeoChart(document.getElementById('health_growth_div'));
+            chart.draw(data);
+        } //annualGrowthResponseHandler
+
+        function annualGrowthvalueResponseHandler(response){
+            checkError(response);
+            var data = response.getDataTable();
+            //data.sort({column: 5, desc: true});
+
+
+            var chart = new google.visualization.LineChart(document.getElementById('health_growth_value_div'));
+            chart.draw(data);
+        } //annualGrowthvalueResponseHandler
+        function annualGrowthpercentResponseHandler(response){
+            checkError(response);
+            var data = response.getDataTable();
+            //data.sort({column: 5, desc: true});
+
+
+            var chart = new google.visualization.LineChart(document.getElementById('health_growth_percent_div'));
+            chart.draw(data);
+        } //annualGrowthpercentResponseHandler
+        // function GDPResponseHandler(response) {
+        //     var data = response.getDataTable();
+        //     data.sort({column: 5, desc:true});
+        //     var options = {
+        //         vAxis: {title: 'GDP per capita'},
+        //         hAxis: {title: 'Country'},
+
+        //     };
+        //     var chart = new google.visualization.BarChart(document.getElementById('GDP_div'));
+        //     chart.draw(data, options);
+        // } //GDPresponsehandler
+        function GDPResponseHandler(response) {
+            var data = response.getDataTable();
+            data.sort({column: 6, desc:true});
+            var options = {
+                vAxis: {title: 'GDP'},
+                hAxis: {title: 'Country'},
+                seriesType: "bars",
+            };
+            var chart = new google.visualization.ComboChart(document.getElementById('GDP_div'));
+            chart.draw(data, options);
+        } //GDPResponseHandler
+    </script>
+
+
+
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <h1><a href="homepage.html"><span class="logo_color">Individual Project</span></a></h1>
+                    <h2>Military ,Healthcare, and Educational spending Visualization</h2>
+                </div><!-- logo_text -->
+            </div><!-- logo -->
+            <div id="menubar">
+                <ul id="menu">
+                    <li ><a href="index.html">Home</a></li>
+                    <li ><a href="military.html" >Military</a></li>
+                    <li class="selected"><a href="Health.html">Health</a></li>
+                    <li ><a href="Education.html">Education</a></li>
+                    <li><a href="More.html">More</a></li>
+                </ul>
+            </div><!-- menubar -->
+        </div><!-- header -->
+        <div id="site_content">
+            
+            <div id="content">
+                <div style = "width:830px;height:300px;background:#F8F8F8">
+                    <h1> </h1>
+                    <div style="width: 450px;float:left; height: 200px;">
+                        <p style = 'font: normal 120% Optima;padding: 30px 30px 0 20px;line-height: 1.7em;'>
+                            <span style=font-size:150%>H</span>ealthcare spending can be related with the development of a country. It is correlated with the GDP of a country. The growth rate of healthcare spending also indicates whether a country has resources and capability to support health programs and increase citizen's happiness.
+                            <!-- <script src="script.js"></script> -->
+                        </p>
+                    </div>
+                    <div id = 'militarypic' style="width: 380px;float: right;
+                    height: 200px;background-size: auto 100%;background-repeat:no-repeat;background-image:url(style/healthcare.jpg)">
+
+                    </div>
+                    
+                </div><!--intro-->
+
+                <div style = "width:830px;height:500px;background:#FFF">
+                    <h3>Total Health Spending </h3>
+                    <div id="health_spending_div" style="width: 550px; height: 400px; float:left;"></div>
+
+                    <div class = 'sidebar'>
+                    <h4>The U.S. still leads the other countires a lot in healthcare spending. And the healthcare spending of the U.S. and China is increasing from 2012-2017.</h4>
+                    </div>
+                </div><!--health Spending plot-->
+                <br>
+                <br>
+                <div style = "width:830px;height:500px;background:#FFF">
+                    <h3>GDP per person and Healthcare per person</h3>
+                    <div id="per_capita_gdp_health_div" style="width: 550px; height: 400px; float:left;"></div>
+
+                    <div class = 'sidebar'>
+                    <h4>Australia has high GDP per person and healthcare spend per person. Countries with gdp per person nearly and over 40k USD have significantly higher health spending per person comparing to other countries.  </h4>
+                    </div>
+                </div><!--health GDP per capita-->
+                <br>
+                <br>
+                <div style = "width:830px;height:500px;background:#FFF">
+                    <h3>Health spending per person growth percent (2016-2017) </h3>
+                    <div id="health_growth_div" style="width: 550px; height: 400px; float:left;"></div>
+
+                    <div class = 'sidebar'>
+                    <h4>Russia has significantly higher growth rate than the other countries from 2016 to 2017.</h4>
+                    </div>
+                </div><!-- healthgrowth percent-->
+                <br><br>
+                <div style = "width:830px;height:500px;background:#FFF">
+                    <h3>Health GDP percent </h3>
+                    <div id="health_GDP_percent_div" style="width: 550px; height: 400px; float:left;"></div>
+
+                    <div class = 'sidebar'>
+                    <h4>For all six years and all eleven countries, the healthcare spending in percent of GDP basically remain in the same level.</h4>
+                    </div>
+                </div><!--health gdp percent plot-->
+
+                <br>
+                <br>
+                <div style = "width:830px;height:500px;background:#FFF">
+                    <h3>Health spending per person growth value  </h3>
+                    <div id="health_growth_value_div" style="width: 550px; height: 400px; float:left;"></div>
+
+                    <div class = 'sidebar'>
+                    <h4>There is a trend for most of the countries that they spend less and less before 2015 and then increase their healthcare spending after 2015; while the U.S. remains in the same level</h4>
+                    </div>
+                </div><!-- healthgrowth-->
+
+                <br>
+                <br>
+                <div style = "width:830px;height:500px;background:#FFF">
+                    <h3>Health spending per person growth percent </h3>
+                    <div id="health_growth_percent_div" style="width: 550px; height: 400px; float:right;"></div>
+
+                    <div class = 'sidebar'>
+                    <h4>The same trend above is also shown here by the percent growth rate. </h4>
+                    </div>
+                </div><!-- healthgrowthpercentall-->
+
+                <br>
+                <br>
+                <div style = "width:830px;height:500px;background:#FFF">
+                    <h3>GDP by year </h3>
+                    <div id="GDP_div" style="width: 550px; height: 400px; float:left;"></div>
+
+                    <div class = 'sidebar'>
+                    <h4>Some countries have low GDP in 2015. It corresponds to our previous observations: similar value of healthcare spending in percent of gdp level and the trend in healthcare per person growth.</h4>
+                    </div>
+                </div>
+
+
+                
+                
+                
+            </div><!-- content -->
+        </div><!-- site_content -->
+        <div id="footer">
+            Copyright &copy; 2020 | 
+            <a href="http://validator.w3.org/check?uri=referer" target="_blank">HTML5</a> | 
+            <a href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank">CSS3</a> | 
+            Developed by <a >Zhilin Wang</a>
+        </div>
+    </div><!-- main -->
+</body>
+</html>

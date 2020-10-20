@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military Spending Comparions</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages': ['corechart', 'geochart']}); //must add GeoChart
+        google.charts.setOnLoadCallback(drawAllSheets);
+
+        function drawAllSheets(){
+            drawSheetName('MilitarySpend', 'SELECT A,B,C,D,E,F,G', militarySpendingResponseHandler);
+            drawSheetName('MilitaryGDP_percent', 'SELECT A,G', MilitaryGDPResponseHandler);
+            // drawSheetName('MilitaryCapita','SELECT A,G',MilitaryCapitaResponseHandler);
+            // drawSheetName('GDPCapita','SELECT A,G',GDPCapitaResponseHandler);
+            // drawSheetName('militaryGDPcapita', 'SELECT A,O,G', perCapitaGDPMilitarySpendingResponseHandler);
+            // drawSheetName('militaryCapita',query('SELECT B,C,D,E,F,G where A = "United States"'),USmilitaryResponseHandler);
+            // //drawSheetName('HealthSpend','SELECT A,B,C,D,E,F,G',animations);
+
+            // drawSheetName('meanmilitaryspending', 'SELECT A,G', averageSpendingResponseHandler);
+            // drawSheetName('sharedgdp', 'SELECT A,B,C,D,E,F', sharedGDPResponseHandler);
+        } //drawAllSheets
+
+        function drawSheetName(sheetName, query, responseHandler){
+            var queryString = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1npZ4Jh-c5J9RWHb0orzV9m5Wx75Qdur3IK18hxOZghU/gviz/tq?sheet='
+                + sheetName + '&headers=1&tq=' + queryString);
+            //print(query.DataView)
+            query.send(responseHandler);
+        } //drawSheetName
+
+        function checkError(response) {
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage())
+                return;
+            }
+        } //checkError
+
+
+        function militarySpendingResponseHandler(response) {
+            var data = response.getDataTable();
+            data.sort({column: 6, desc:true});
+            var options = {
+                vAxis: {title: 'Spending ($)'},
+                hAxis: {title: 'Country'}
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById('military_spending_div'));
+            chart.draw(data, options);
+        } //militarySpendingResponseHandler
+
+
+        function MilitaryGDPResponseHandler(response){
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+
+            var options = {
+                colorAxis: {colors: ['#e7711c', '#4374e0']}, //orange to blue
+                title: 'Military expenditure (% of GDP)'
+            };
+
+            var chart = new google.visualization.GeoChart(document.getElementById('military_GDP_div'));
+            chart.draw(data, options);
+        } //MilitaryGDPResponseHandler
+
+
+
+        function MilitaryCapitaResponseHandler(response){
+            checkError(response)
+
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+
+            var options = {
+                legend: 'none',
+                bars: 'horizontal',
+                isStacked: true,
+                annotations: {alwaysOutside: true},
+                title: 'Military spend per capita (2017)',
+                vAxis: {title: 'Country'},
+                hAxis: {title: 'Spending ($)'}
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('per_capita_military_div'));
+            chart.draw(data, options);
+
+        }//Military capita
+        
+        function GDPCapitaResponseHandler(response){
+            checkError(response)
+
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+
+            var options = {
+                legend: 'none',
+                bars: 'horizontal',
+                isStacked: true,
+                annotations: {alwaysOutside: true},
+                title: 'GDP per capita (2017)',
+                vAxis: {title: 'Country'},
+                hAxis: {title: 'GDP per capita ($)'}
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('per_capita_GDP_div'));
+            chart.draw(data, options);
+
+        }//GDP capita
+
+
+
+        function perCapitaGDPMilitarySpendingResponseHandler(response){
+            checkError(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+
+            var options = {
+                legend: 'none',
+                bars: 'horizontal',
+                isStacked: true,
+                annotations: {alwaysOutside: true},
+                title: 'Per Capita Military Spending vs. Per Capita GDP (2017)',
+                vAxis: {title: 'Country'},
+                hAxis: {title: 'Spending ($)'}
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('per_capita_gdp_military_div'));
+            chart.draw(data, options);
+        } //perCapitaGDPMilitarySpendingResponseHandler
+        function myFunction() {
+            
+            var fname = document.getElementById("fname").value;
+            submitOK = "true";
+
+            if (fname.length > 10) {
+                alert("The name may have no more than 10 characters");
+                submitOK = "false";
+            } 
+
+
+            if (submitOK == "false") {
+                return false;
+            }
+            
+            
+        }
+
+
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(USmilitaryResponseHandler);
+        function USmilitaryResponseHandler(){
+            // checkError(response)
+            // var data = response.getDataTable();
+            var data = google.visualization.arrayToDataTable([
+                ['United States', 'Military Spending Per capita'],
+                ['2012',  2310.813856],
+                ['2013',  2149.501613],
+                ['2014', 2035.145927],
+                ['2015', 1976.79504],
+                ['2016',  1981.338337],
+                ['2017',  1990.097781],
+             ]);
+            //var view = new google.visualization.DataView(data);
+
+            var options = {
+                title:'US military expenditure per capita (2012-2017)'
+                //pieHole:0.4
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('USmilitary_capita_div'));
+            chart.draw(data, options);
+        }//US military capita
+
+
+
+
+
+        function averageSpendingResponseHandler(response){
+            var data = response.getDataTable();
+            
+            var options = {
+                legend: 'none',
+                bars: 'horizontal',
+                vAxis: {title: 'Country'},
+                hAxis: {title: 'Spending in Billions ($)'}
+            };
+
+            /* using data directly */
+            /*
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, prefix: '$'
+            });
+            formatter.format(data, 1);
+            var chart = new google.visualization.BarChart(document.getElementById('average_military_spending_div'));
+            chart.draw(data, options);
+            */
+
+            /* using a view */
+            var view = new google.visualization.DataView(data);
+
+            view.setColumns([0,1, {
+                calc: function(dt, row){
+                    return '$' + Math.floor(dt.getFormattedValue(row, 1)) + 'B';
+                },
+                sourceColumn: 1,
+                type: 'string',
+                role: 'annotation'
+            }]);
+            var chart = new google.visualization.BarChart(document.getElementById('average_military_spending_div'));
+            chart.draw(view, options); //pass the view in place of data
+        } //averageSpendingResponseHandler
+
+        function sharedGDPResponseHandler(response){
+            var data = response.getDataTable();
+            data.sort({column: 5, desc: true});
+
+            options = {
+                hAxis: {title: 'Country'},
+                vAxis: {title: 'Military Spending % of GDP'}
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('shared_gdp_div'));
+            chart.draw(data, options);
+
+        } //sharedGDPResponseHandler
+
+    </script>
+</head>
+<body>
+    <!-- <h3>Military Spending Analysis</h3>
+    <div id="military_spending_div" style="width: 900px; height: 500px;"></div>
+
+    <h3>Military Expenditure % of GDP </h3>
+    <div id="military_GDP_div" style="width: 900px; height: 500px;"></div>
+
+    <!--
+    <h3>Average Military Spending</h3>
+    <div id="average_military_spending_div" style="width: 900px; height: 500px;"></div>
+
+    <h3>Shared GDP</h3>
+    <div id="shared_gdp_div" style="width: 900px; height: 500px;"></div>
+    
+    <br>
+    <h3>Per Capita Military (2017)</h3>
+    <div id="per_capita_military_div" style="width: 450px; height: 500px;"></div>
+
+    <div style = "width:900px;height:200px;background:#FFF">
+        <h3>Per Capita Military (2017)</h3>
+        <div id="per_capita_military_div" style="width: 450px;float:left; height: 500px;"></div>
+        <!--<h3>Per Capita GDP(2017)</h3>
+        <div id="per_capita_GDP_div" style="width: 450px; float: right;height: 500px;"></div>
+        
+    </div> -->
+
+    <br>
+    <h3>Per Capita Military Spending vs. Per Capita GDP (2017)</h3>
+    <div id="per_capita_gdp_military_div" style="width: 900px; height: 500px;"></div>
+
+    <form action="/action_page.php" onsubmit="return myFunction()">
+        Name (max 10 characters): <input type="text" id="fname" size="20" name="fname"><br>
+        <input type="submit" value="Submit"> 
+    </form>
+      
+      
+    
+    <!-- <br>
+    <h3>United States Per Capita Military Spending </h3>
+    <div id='USmilitary_capita_div' style="width: 900px; height: 500px;"></div> -->
+
+    <!-- <br>
+    <h3>Brief Visulization of Military, Health, and Education Expenditures by Countries and Years </h3>
+    <div id='visualization' style="width: 900px; height: 500px;"></div>
+    <button id = 'b1' type= "button" style = 'width:100px;height:33px;background: #11a321'> Military</button> 
+    <button id = 'b2' type= "button" style = 'width:100px;height:33px;background: #AAA'> Health</button> 
+    <button id = 'b3' type= "button" style = 'width:100px;height:33px;background: #23451f'> Education</button>  -->
+</body>
+</html>

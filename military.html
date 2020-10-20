@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Military</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages': ['corechart', 'geochart']}); //must add GeoChart
+        google.charts.setOnLoadCallback(drawAllSheets);
+        function drawAllSheets(){
+            drawSheetName('MilitarySpend', 'SELECT A,B,C,D,E,F,G,H', militarySpendingResponseHandler);
+            drawSheetName('MilitaryGDP_percent', 'SELECT A,G', MilitaryGDPResponseHandler);
+            drawSheetName('MilitaryCapita','SELECT A,G',MilitaryCapitaResponseHandler);
+            drawSheetName('GDPCapita','SELECT A,G',GDPCapitaResponseHandler);
+            // drawSheetName('militaryGDPcapita', 'SELECT A,O,G', perCapitaGDPMilitarySpendingResponseHandler);
+            // drawSheetName('militaryCapita',query('SELECT B,C,D,E,F,G where A = "United States"'),USmilitaryResponseHandler);
+            //drawSheetName('HealthSpend','SELECT A,B,C,D,E,F,G',animations);
+
+            // drawSheetName('meanmilitaryspending', 'SELECT A,G', averageSpendingResponseHandler);
+            // drawSheetName('sharedgdp', 'SELECT A,B,C,D,E,F', sharedGDPResponseHandler);
+        } //drawAllSheets
+        function drawSheetName(sheetName, query, responseHandler){
+            var queryString = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1npZ4Jh-c5J9RWHb0orzV9m5Wx75Qdur3IK18hxOZghU/gviz/tq?sheet='
+                + sheetName + '&headers=1&tq=' + queryString);
+            //print(query.DataView)
+            query.send(responseHandler);
+        } //drawSheetName
+        function checkError(response) {
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage())
+                return;
+            }
+        } //checkError
+
+        function militarySpendingResponseHandler(response) {
+            var data = response.getDataTable();
+            data.sort({column: 6, desc:true});
+            var options = {
+                vAxis: {title: 'Spending ($)'},
+                hAxis: {title: 'Country'},
+                seriesType: "bars",
+                series: {6: {type: "line"}}
+            };
+            var chart = new google.visualization.ComboChart(document.getElementById('military_spending_div'));
+            chart.draw(data, options);
+        } //militarySpendingResponseHandler
+
+        function MilitaryGDPResponseHandler(response){
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+
+            var options = {
+                colorAxis: {colors: ['#e7711c', '#4374e0']}, //orange to blue
+                title: 'Military expenditure (% of GDP)'
+            };
+
+            var chart = new google.visualization.GeoChart(document.getElementById('military_GDP_div'));
+            chart.draw(data, options);
+        } //MilitaryGDPResponseHandler
+
+        function MilitaryCapitaResponseHandler(response){
+            checkError(response)
+
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+
+            var options = {
+                legend: 'none',
+                bars: 'horizontal',
+                isStacked: true,
+                annotations: {alwaysOutside: true},
+                title: 'Military spend per capita (2017)',
+                vAxis: {title: 'Country'},
+                hAxis: {title: 'Spending ($)'}
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('per_capita_military_div'));
+            chart.draw(data, options);
+
+        }//Military capita
+        
+        function GDPCapitaResponseHandler(response){
+            checkError(response)
+
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+
+            var options = {
+                legend: 'none',
+                bars: 'horizontal',
+                isStacked: true,
+                annotations: {alwaysOutside: true},
+                title: 'GDP per capita (2017)',
+                vAxis: {title: 'Country'},
+                hAxis: {title: 'GDP per capita ($)'}
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('per_capita_GDP_div'));
+            chart.draw(data, options);
+
+        }//GDP capita
+
+
+
+
+    </script>
+
+
+
+
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <h1><a href="homepage.html"><span class="logo_color">Individual Project</span></a></h1>
+                    <h2>Military ,Healthcare, and Educational spending Visualization</h2>
+                </div><!-- logo_text -->
+            </div><!-- logo -->
+            <div id="menubar">
+                <ul id="menu">
+                    <li ><a href="index.html">Home</a></li>
+                    <li class="selected"><a href="military.html" >Military</a></li>
+                    <li><a href="Health.html">Health</a></li>
+                    <li><a href="Education.html">Education</a></li>
+                    <li><a href="More.html">More</a></li>
+                </ul>
+            </div><!-- menubar -->
+        </div><!-- header -->
+        <div id="site_content">
+            
+            <div id="content">
+
+                <div style = "width:830px;height:300px;background:#F8F8F8">
+                    <h1></h1>
+                    <div style="width: 450px;float:left; height: 200px;">
+                        <p style = 'font: normal 120% Optima;padding: 30px 30px 0 20px;line-height: 1.7em;'>
+                            <span style=font-size:150%>M</span>ilitary spending directly reflects both the priority a country put on their military development and their military power.
+                            In this section, military spending will be compared with GDP in percent value and by per capita. 
+                            <!-- <script src="script.js"></script> -->
+                        </p>
+                    </div>
+                    <div id = 'militarypic' style="width: 380px;float: right;
+                    height: 200px;background-size: auto 100%;background-repeat:no-repeat;background-image:url(style/tank2.jpg)">
+
+                    </div>
+                    
+                </div>
+
+                <div style = "width:830px;height:500px;background:#FFF">
+                    <h3>Total Military Spending </h3>
+                    <div id="military_spending_div" style="width: 550px; height: 400px; float:left;"></div>
+
+                    <div class = 'sidebar'>
+                    <h4>
+                        Overall, the U.S. spends the most on military and there is a significant gap 
+                        between the U.S. and other countries.<br><br>
+                        China spends the second most and its military spending 
+                        increases every year from 2012 to 2017.</h4>
+                    </div>
+                </div><!--Military Spending plot-->
+                <br>
+                <br>
+                <div style = "width:830px;height:500px;background:#FFF">
+
+                    <h3>Military Expenditure % of GDP (2017) </h3>
+                    <div id="military_GDP_div" style="width: 550px; height: 400px; float:left;"></div>
+
+                    <div class = 'sidebar'>
+                        <h4>
+                            
+                            Compared with other countries, Russia has the highest proportion of military expenditures in GDP in 2017.</h4>
+                        </div>
+                </div>
+
+
+                <br>
+                <br>
+                <div style = "width:830px;height:650px;background:#FFF">
+                    <h3>Military spending per capita VS GDP per capita (2017)</h3>
+                    <div id="per_capita_military_div" style="width: 415px;float:left; height: 500px;"></div>
+                    <!-- <h3>Per Capita GDP(2017)</h3> -->
+                    <div id="per_capita_GDP_div" style="width: 415px; float: right;height: 500px;"></div>
+                    <h4>The United States is in a leading position in both per capita military expenditure and per capita GDP expenditure. 
+                        By comparing these two charts, it can be seen that, for example, Germany will give priority to economic development 
+                        rather than military use; while Korea gives more priority on military but still not too behind in GDP per capita.
+                </div>
+                <!-- <div style = "width:830px;height:500px;background:#FFF">
+
+                    <h3>Military Expenditure % of GDP (2017) </h3>
+                    <div id="military_GDP_div" style="width: 550px; height: 400px; float:left;"></div>
+
+                    <div class = 'sidebar'>
+                        <h4>
+                            Compared with other countries, the U.S. has the highest proportion of military expenditures in GDP in 2017.</h4>
+                        </div>
+                </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+            </div><!-- content -->
+        </div><!-- site_content -->
+        <div id="footer">
+            Copyright &copy; 2020 | 
+            <a href="http://validator.w3.org/check?uri=referer" target="_blank">HTML5</a> | 
+            <a href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank">CSS3</a> | 
+            Developed by <a >Zhilin Wang</a>
+        </div>
+    </div><!-- main -->
+</body>
+</html>

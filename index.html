@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Individual Project(home)</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages': ['corechart', 'geochart']}); //must add GeoChart
+        google.charts.load('current', {'packages':['corechart']});
+        
+
+        google.charts.setOnLoadCallback(pieUS);
+        function pieUS() {
+            var data = google.visualization.arrayToDataTable([
+            ['category', 'Spends'],
+            ['Military',   646752927000 ],
+            ['Health',      3329846898338.69],
+            ['Education',  1154000000000],
+            
+            ]);
+
+            var options = {
+            title: 'The U.S.',
+            pieHole: 0.4,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('pie_US'));
+            chart.draw(data, options);
+        }//pieUS
+        google.charts.setOnLoadCallback(pieChina);
+        function pieChina() {
+            var data = google.visualization.arrayToDataTable([
+            ['category', 'Spends'],
+            ['Military',   228466270027.362 ],
+            ['Health',      611158439044.527],
+            ['Education',  688300000000],
+            ]);
+
+            var options = {
+            title: 'China',
+            pieHole: 0.4,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('pie_China'));
+            chart.draw(data, options);
+        }//pieChina
+        google.charts.setOnLoadCallback(pie_Korea);
+        function pie_Korea() {
+            var data = google.visualization.arrayToDataTable([
+            ['category', 'Spends'],
+            ['Military',   39170682135.6216 ],
+            ['Health',      117263079907.285],
+            ['Education',  65000000000],
+            ]);
+
+            var options = {
+            title: 'Korea',
+            pieHole: 0.4,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('pie_korea'));
+            chart.draw(data, options);
+        }//pieKorea
+
+
+
+        
+        google.charts.setOnLoadCallback(drawSeriesChart);
+        function drawSeriesChart() {  
+            var data = google.visualization.arrayToDataTable([            
+                ['ID', 'Health', 'Education', 'Region',     'Military'],
+                ['USA',    10246.13867,              3538.619,      'North America',  1990.09778093542],
+                ['CHN',    440.8256226,              496.2511,      'Asia',         164.7914195],
+                ['KOR',    2283.074707,               1265.529,      'Asia',         762.6406684],
+                ['GBR',   3858.674316,               2195.012,      'Europe',   702.9080445],
+                ['FRA',    4379.727051,              2123.702,         'Europe',         735.7529223],
+                ['JPN',    4168.986328,              1222.534,       'Asia',    357.9819891],
+                ['DEU',   5033.452148,              2177.674,      'Europe',    512.5491189],
+                ['AUS',    5331.817871,              2772.148,      'Australia',    1125.569872],
+                ['IND',    69.29309845,              53.41167,      'Asia',         48.22695193],
+                ['BRA',    928.7993164,              625.4997,      'South America',  140.8964564],
+                ['RUS',    585.87323,                 509.3541,       'Europe',         460.4069545]
+            ]);
+
+            var options = {
+                title: 'Correlation between health, education ' +
+                    'and military of some world countries (per capita; Year 2017)',
+                hAxis: {title: 'Health per capita'},
+                vAxis: {title: 'Education per capita'},
+                bubble: {textStyle: {fontSize: 11}}
+            };
+
+            var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+            chart.draw(data, options);
+        }//draw series chart
+
+        google.setOnLoadCallback(animations);
+        function animations(){
+            // Some raw data (not necessarily accurate)
+            var rowData1 = [['Country Name','2012','2013','2014','2015','2016',	'2017'],
+                            ['United States',	725205000000,	679229000000,	647789000000,	633829639000,	639856443000	,646752927000],
+                            ['China',	157390377246,	179880451358,	200772203840,	214471495714,	216404283040,	228466270027],
+                            ['Korea, Rep.',31951760810	,34311220715	,37552298954,	36570769323	,36885283430	,39170682136],
+                            ['United Kingdom',	58495656721	,56861759588,	59182858554	,53862185493,	48118943518,	46433303401],
+                            ['France',	50216507403,	52001462448	,53134750899,	45647471641	,47370589553,	49195662250],
+                            ['Japan',	60011530195,	49023932407,	46903466613,	42106103306	,46471287714,	45387031802],
+                            ['Germany',	44470341542	,44865692370,	44216057539	,37020073195	,39724906521,	42365773545],
+                            ['Australia',	26216580848	,24825262589	,25783708714	,24046205860,	26382947050,	27691112417],
+                            ['India',	47216920048	,47403528801,	50914096277,	51295483754	,56637622641	,64559435281],
+                            ['Brazil',	33987005074	,32874787231,	32659614241,	24617701683	,24224746901	,29283050314],
+                            ['Russian Federation',	81469399931	,88352896464,	84696504653	,66418326824	,69245309461,	66527303992]]
+            var rowData3 = [['Country Name','2012','2013','2014','2015','2016',	'2017'], ['United States', 405000000000.0, 398000000000.0, 552000000000.0, 874000000000.0, 770000000000.0, 1150000000000.0], ['China', 323000000000.0, 508000000000.0, 485000000000.0, 534000000000.0, 629000000000.0, 688000000000.0], ['Korea, Rep.', 175000000000.0, 174700000000.0, 174700000000.0, 149000000000.0, 65000000000.0, 65000000000.0], ['United Kingdom', 150000000000.0, 154000000000.0, 171000000000.0, 163000000000.0, 146000000000.0, 145000000000.0], ['France', 142000000000.0, 142000000000.0, 142000000000.0, 142000000000.0, 142000000000.0, 142000000000.0], ['Japan', 229000000000.0, 189000000000.0, 174000000000.0, 160000000000.0, 157000000000.0, 155000000000.0], ['Germany', 175000000000.0, 185000000000.0, 192000000000.0, 162000000000.0, 168000000000.0, 180000000000.0], ['Australia', 75500000000.0, 82600000000.0, 75900000000.0, 71700000000.0, 63800000000.0, 68200000000.0], ['India', 70800000000.0, 71500000000.0, 71500000000.0, 71500000000.0, 71500000000.0, 71500000000.0], ['Brazil', 145000000000.0, 144000000000.0, 146000000000.0, 112000000000.0, 114000000000.0, 130000000000.0], ['Russian Federation', 83800000000.0, 86200000000.0, 82700000000.0, 52100000000.0, 64200000000.0, 73600000000.0]]
+
+            var rowData2 = [['Country Name','2012','2013','2014','2015','2016',	'2017'],['United States', 2649050000000.0, 2732600000000.0, 2886350000000.0, 3058240000000.0, 3210470000000.0, 3329850000000.0], ['China', 382952000000.0, 445472000000.0, 493490000000.0, 538678000000.0, 549166000000.0, 611158000000.0], ['Korea, Rep.', 79107743515.0, 86338173812.0, 96963745054.0, 98227673784.0, 104505000000.0, 117263000000.0], ['United Kingdom', 222498000000.0, 269845000000.0, 297244000000.0, 281709000000.0, 258838000000.0, 254900000000.0], ['France', 305468000000.0, 323419000000.0, 330756000000.0, 279775000000.0, 284042000000.0, 292848000000.0], ['Japan', 665211000000.0, 552621000000.0, 521763000000.0, 474703000000.0, 530190000000.0, 528568000000.0], ['Germany', 382397000000.0, 410842000000.0, 428456000000.0, 377187000000.0, 389854000000.0, 416050000000.0], ['Australia', 137471000000.0, 135032000000.0, 132346000000.0, 116408000000.0, 120950000000.0, 131173000000.0], ['India', 62088421806.0, 72007201865.0, 74045253915.0, 77254885889.0, 80289627566.0, 92759818445.0], ['Brazil', 189508000000.0, 195909000000.0, 204757000000.0, 158701000000.0, 164036000000.0, 193036000000.0], ['Russian Federation', 108843000000.0, 116408000000.0, 106755000000.0, 72315490017.0, 67715481088.0, 84656771788.0]]
+
+            //checkError(response);
+            //var rowData2 = response.getDataTable();
+            // Create and populate the data tables.
+            var data = [];
+            data[0] = google.visualization.arrayToDataTable(rowData1);
+            data[1] = google.visualization.arrayToDataTable(rowData2);
+            data[2] = google.visualization.arrayToDataTable(rowData3);
+
+            data[0].sort({column: 6, desc:true});
+            data[1].sort({column: 6, desc:true});
+            data[2].sort({column: 6, desc:true});
+
+            var options = {
+            width: 750,
+            height: 500,
+            vAxis: {title: "Money Spend"},
+            hAxis: {title: "Country"},
+            seriesType: "bars",
+            //series: {5: {type: "line"}},
+            animation:{
+                duration: 1000,
+                easing: 'out'
+            },
+            };
+            var current = 0;
+            // Create and draw the visualization.
+            var chart = new google.visualization.ComboChart(document.getElementById('visualization'));
+            
+            var button = document.getElementById('b1');
+            var button2 = document.getElementById('b2')
+            var button3 = document.getElementById('b3')
+
+            function drawChart() {
+                // Disabling the button while the chart is drawing.
+                button.disabled = true;
+                google.visualization.events.addListener(chart, 'ready',
+                    function() {
+                        button.disabled = false;
+                        //button.value = 'Switch to ' + (current ? 'Tea' : 'Coffee');
+                    });
+                options['title'] = 'Military';
+
+                chart.draw(data[current], options);
+            }
+            function drawChart2() {
+                // Disabling the button while the chart is drawing.
+                button2.disabled = true;
+                google.visualization.events.addListener(chart, 'ready',
+                    function() {
+                        button2.disabled = false;
+                        //button.value = 'Switch to ' + (current ? 'Tea' : 'Coffee');
+                    });
+                options['title'] = 'Health';
+
+                chart.draw(data[current], options);
+            }
+            function drawChart3() {
+                // Disabling the button while the chart is drawing.
+                button3.disabled = true;
+                google.visualization.events.addListener(chart, 'ready',
+                    function() {
+                        button3.disabled = false;
+                        //button.value = 'Switch to ' + (current ? 'Tea' : 'Coffee');
+                    });
+                options['title'] = 'Education';
+
+                chart.draw(data[2], options);
+            }
+            drawChart();
+
+            button.onclick = function() {
+                current = 0
+                drawChart();
+            }
+            button2.onclick = function(){
+                current = 1;
+                drawChart2();
+            }
+            button3.onclick = function(){
+                current = 2;
+                drawChart3();
+            }
+        }
+    </script>
+
+
+
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <h1><a href="homepage.html"><span class="logo_color">Individual Project</span></a></h1>
+                    <h2>Military ,Healthcare, and Educational spending Visualization</h2>
+                </div><!-- logo_text -->
+            </div><!-- logo -->
+            <div id="menubar">
+                <ul id="menu">
+                    <li class="selected"><a href="index.html">Home</a></li>
+                    <li><a href="military.html" >Military</a></li>
+                    <li><a href="Health.html">Health</a></li>
+                    <li><a href="Education.html">Education</a></li>
+                    <li><a href="More.html">More</a></li>
+                </ul>
+            </div><!-- menubar -->
+        </div><!-- header -->
+        <div id="site_content">
+            <!-- <div class="sidebar">
+                <h3> sadf</h3>
+                <h4>Nima Zahadat, Ph.D.</h4>
+                <h5><a href="mailto:nzahadat@gwu.edu">nzahadat@gwu.edu</a></h5>
+                <p>
+                    I will be your instructor for this course.
+                    Please read Blackboard and the syllabus carefully.
+                </p>
+                <p></p>
+                <h4>Office</h4>
+                <h5>Samson Hall 313<br>Washington, DC</h5>
+                <p>Office hours by appointment</p>
+                <h3>References</h3>
+                <ul>
+                    <li><a href="#">Google Gallery</a></li>
+                    <li><a href="#">Government Datasets</a></li>
+                    <li><a href="#">Gapminder Visuals</a></li>
+                    <li><a href="#">Plotly</a></li>
+                </ul>
+            </div>sidebar -->
+            <div id="content">
+                <h1>
+                </h1>
+                <div id="attach_here" ></div>
+                <p style = 'font: normal 150% Optima;padding: 0 30px 20px 20px;line-height: 1.7em;'>
+                    <span style=font-size:150%>Introduction</span>
+                    <br>
+                    <br>
+                    This project visualizes the annual military expenditures, education expenditures, 
+                    and health expenditures of eleven nations from 2012 to 2017 to compare the trends of their
+                     expenditures by time and relationships among countries. 
+                    <br>
+                    <br>
+                    In the homepage, the general dataset and relationship between spendings are displayed. Each spending has a corresponding section, which has more detailed analysis.
+                    <!-- <script src="script.js"></script> -->
+                </p>
+                <div style = "width:830px;height:700px;background:#EEE">
+                    <h3>Brief Visualization of Military, Health, and Education Expenditures by Countries and Years </h3>
+                    
+                
+                    <button id = 'b1' type= "button" style = 'width:100px;height:33px;background: #3cba54'> Military</button> 
+                    <button id = 'b2' type= "button" style = 'width:100px;height:33px;background: #f4c20d'> Health</button> 
+                    <button id = 'b3' type= "button" style = 'width:100px;height:33px;background: #DE5246'> Education</button>
+                    <div id='visualization' style= "width: 600px; height: 500px;float:left"></div>
+
+                </div><!--div brief visualizaiotn-->
+
+                <br>
+                <div style = "width:830px;height:700px;background:#EEE">
+                    <h3>Relationship between the 3 spendings per capita </h3>
+                    
+                
+                    <div id="series_chart_div" style="width: 745px; height: 600px;"></div>
+
+                </div><!--div series_chart-->
+
+                <br>
+                <div style = "width:830px;height:380px;background:#EEE">
+                    <h3>Proportion of the 3 spendings by country </h3>
+                
+                    <div id="pie_US" class = 'left'></div>
+                    <div id="pie_China" class = 'center'></div>
+                    <div id="pie_korea" class = 'right'></div>
+                </div><!--div pie charts-->
+
+                
+                
+            </div><!-- content -->
+        </div><!-- site_content -->
+        <div id="footer">
+            Copyright &copy; 2020 | 
+            <a href="http://validator.w3.org/check?uri=referer" target="_blank">HTML5</a> | 
+            <a href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank">CSS3</a> | 
+            Developed by <a >Zhilin Wang</a>
+        </div>
+    </div><!-- main -->
+</body>
+</html>

@@ -79,7 +79,9 @@ html {
     width: 890px;
     background: url(back.png) repeat-x;
   }
-  
+  .logo_color{
+    color: #4C8BF5
+  }
   /* #militarypic{
     position: fixed;
     /* top: -50%; 

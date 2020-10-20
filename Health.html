@@ -120,18 +120,7 @@
 
             var chart = new google.visualization.LineChart(document.getElementById('health_growth_percent_div'));
             chart.draw(data);
-        } //annualGrowthpercentResponseHandler
-        // function GDPResponseHandler(response) {
-        //     var data = response.getDataTable();
-        //     data.sort({column: 5, desc:true});
-        //     var options = {
-        //         vAxis: {title: 'GDP per capita'},
-        //         hAxis: {title: 'Country'},
-
-        //     };
-        //     var chart = new google.visualization.BarChart(document.getElementById('GDP_div'));
-        //     chart.draw(data, options);
-        // } //GDPresponsehandler
+        } //annual growth percent response handler
         function GDPResponseHandler(response) {
             var data = response.getDataTable();
             data.sort({column: 6, desc:true});
@@ -200,7 +189,7 @@
                     <div id="per_capita_gdp_health_div" style="width: 550px; height: 400px; float:left;"></div>
 
                     <div class = 'sidebar'>
-                    <h4>Australia has high GDP per person and healthcare spend per person. Countries with gdp per person nearly and over 40k USD have significantly higher health spending per person comparing to other countries.  </h4>
+                    <h4>Australia has high GDP per person and healthcare spend per person. Countries with GDP per person nearly and over 40k USD have significantly higher health spending per person comparing to other countries.  </h4>
                     </div>
                 </div><!--health GDP per capita-->
                 <br>

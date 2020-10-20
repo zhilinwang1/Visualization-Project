@@ -14,12 +14,6 @@
             drawSheetName('MilitaryGDP_percent', 'SELECT A,G', MilitaryGDPResponseHandler);
             drawSheetName('MilitaryCapita','SELECT A,G',MilitaryCapitaResponseHandler);
             drawSheetName('GDPCapita','SELECT A,G',GDPCapitaResponseHandler);
-            // drawSheetName('militaryGDPcapita', 'SELECT A,O,G', perCapitaGDPMilitarySpendingResponseHandler);
-            // drawSheetName('militaryCapita',query('SELECT B,C,D,E,F,G where A = "United States"'),USmilitaryResponseHandler);
-            //drawSheetName('HealthSpend','SELECT A,B,C,D,E,F,G',animations);
-
-            // drawSheetName('meanmilitaryspending', 'SELECT A,G', averageSpendingResponseHandler);
-            // drawSheetName('sharedgdp', 'SELECT A,B,C,D,E,F', sharedGDPResponseHandler);
         } //drawAllSheets
         function drawSheetName(sheetName, query, responseHandler){
             var queryString = encodeURIComponent(query);

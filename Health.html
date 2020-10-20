@@ -11,20 +11,13 @@
         google.charts.setOnLoadCallback(drawAllSheets);
         function drawAllSheets(){
             drawSheetName('HealthSpend', 'SELECT A,B,C,D,E,F,G,H', HealthSpendingResponseHandler);
-            // drawSheetName('MilitaryGDP_percent', 'SELECT A,G', MilitaryGDPResponseHandler);
-            // drawSheetName('MilitaryCapita','SELECT A,G',MilitaryCapitaResponseHandler);
-            // drawSheetName('GDPCapita','SELECT A,G',GDPCapitaResponseHandler);
             drawSheetName('healthGDPcapita', 'SELECT A,O,G', perCapitaGDPHealthSpendingResponseHandler);
             drawSheetName('HealthGDP_percent','SELECT A,B,C,D,E,F,G',HealthGDPPercentResponseHandler)
-            // drawSheetName('militaryCapita',query('SELECT B,C,D,E,F,G where A = "United States"'),USmilitaryResponseHandler);
-            //drawSheetName('HealthSpend','SELECT A,B,C,D,E,F,G',animations);
             drawSheetName('HealthDiff', 'SELECT A,L', annualGrowthResponseHandler);
             drawSheetName('HealthDiffT', 'SELECT A,B,C,D,E,F,G,H,I,J,K,L', annualGrowthvalueResponseHandler);
             drawSheetName('HealthDiffT', 'SELECT A,O,P,Q,R,S,T,U,V,W,X,Y', annualGrowthpercentResponseHandler);
             drawSheetName('GDP', 'SELECT A,B,C,D,E,F,G', GDPResponseHandler);
-            //drawAllSheets('GDPCapita','SELECT A,B,C,D,E,F,G',GDPResponseHandler);
-            // drawSheetName('meanmilitaryspending', 'SELECT A,G', averageSpendingResponseHandler);
-            // drawSheetName('sharedgdp', 'SELECT A,B,C,D,E,F', sharedGDPResponseHandler);
+
         } //drawAllSheets
         function drawSheetName(sheetName, query, responseHandler){
             var queryString = encodeURIComponent(query);

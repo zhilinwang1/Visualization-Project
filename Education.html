@@ -12,21 +12,11 @@
         //select = 'SELECT A,B,J'
         function drawAllSheets(){
             drawSheetName('EducationSpend', 'SELECT A,B,C,D,E,F,G,H', EducationSpendingResponseHandler);
-            // drawSheetName('MilitaryGDP_percent', 'SELECT A,G', MilitaryGDPResponseHandler);
-            // drawSheetName('MilitaryCapita','SELECT A,G',MilitaryCapitaResponseHandler);
-            // drawSheetName('GDPCapita','SELECT A,G',GDPCapitaResponseHandler);
             drawSheetName('EducationGDPcapita', 'SELECT A,B,I', perCapitaGDPEDUSpendingResponseHandler);
             drawSheetName('EducationGDPcapita', 'SELECT A,G,N', perCapitaGDPEDU2017SpendingResponseHandler);
-            // drawSheetName('HealthGDP_percent','SELECT A,B,C,D,E,F,G',HealthGDPPercentResponseHandler);
-            // drawSheetName('EducationGDP','SELECT A,B,O', GDPEducationSpendingResponseHandler);
-            // drawSheetName('militaryCapita',query('SELECT B,C,D,E,F,G where A = "United States"'),USmilitaryResponseHandler);
-            //drawSheetName('HealthSpend','SELECT A,B,C,D,E,F,G',animations);
             drawSheetName('EducationDiff', 'SELECT A,L', annualGrowthResponseHandler);
             drawSheetName('EducationDiffT', 'SELECT A,B,C,D,E,F,G,H,I,J,K,L', annualGrowthvalueResponseHandler);
             drawSheetName('EducationDiffT', 'SELECT A,O,P,Q,R,S,T,U,V,W,X,Y', annualGrowthpercentResponseHandler);
-            
-            // drawSheetName('meanmilitaryspending', 'SELECT A,G', averageSpendingResponseHandler);
-            // drawSheetName('sharedgdp', 'SELECT A,B,C,D,E,F', sharedGDPResponseHandler);
         } //drawAllSheets
         function drawSheetName(sheetName, query, responseHandler){
             var queryString = encodeURIComponent(query);
